@@ -3,15 +3,16 @@ const config = require('./config')
 const env = process.env.NODE_ENV;
 const {
     mysql
-} = config[env]
+} = config.dev
 
 const DB = require('knex')({
     client: 'mysql',
     connection: {
         host: mysql.host,
-        user: mysql.port,
+        port:mysql.port,
+        user: mysql.user,
         password: mysql.pass,
-        database: mysql.db,
+        database: mysql.database,
         charset:mysql.char
     }
 });

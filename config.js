@@ -8,7 +8,7 @@ const conf={
             host:'localhost',
             port:'3306',
             user:'root',
-            db:'taobao',
+            database:'taobao',
             pass:'123456',
             char:'utf8mb4'
         }
@@ -19,7 +19,7 @@ const conf={
             port: 3306,
             host: '',
             user: '',
-            db: '',
+            database: '',
             pass: '',
             char: 'utf8mb4'
         },
