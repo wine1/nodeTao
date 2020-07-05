@@ -1,15 +1,10 @@
-var router = require('koa-router')();
+/**
+ * ajax 服务路由集合
+ */
 
-router.get('/', function *(next) {
-  yield this.render('index', {
-    title: 'Hello World Koa!'
-  });
-});
+const router = require('koa-router')();
+const controllers=require('../controllers')
 
-router.get('/foo', function *(next) {
-  yield this.render('index', {
-    title: 'Hello World foo!'
-  });
-});
+router.post('/login',controllers.login.signIn)//登录
 
-module.exports = router;
+module.exports=router
