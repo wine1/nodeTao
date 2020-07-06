@@ -3,8 +3,11 @@
  */
 
 const router = require('koa-router')();
-const controllers=require('../controllers')
+const controllers = require('../controllers')
 
-router.post('/login',controllers.login.signIn)//登录
+console.log(controllers.login.signIn)
 
-module.exports=router
+router.post('/login', controllers.login.signIn) //登录
+router.get('/goodsList', controllers.goods.getGoodsList) //获取物品列表
+
+module.exports = router

@@ -14,7 +14,6 @@ async function signIn(ctx) {
     }
 }
 
-
 module.exports= {
     signIn
 }

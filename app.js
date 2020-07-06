@@ -1,11 +1,19 @@
-var app = require('koa')()
-  , logger = require('koa-logger')
-  , json = require('koa-json')
-  , views = require('koa-views')
-  , onerror = require('koa-onerror');
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+const Koa = require('koa'),
+  cors = require('koa2-cors'),
+  logger = require('koa-logger'),
+  json = require('koa-json'),
+  views = require('koa-views'),
+  onerror = require('koa-onerror');
+
+
+const bodyParser = require('koa-bodyparser');
+const response = require('./middlewares/response');
+const index = require('./routes/index');
+const app = new Koa()
 
 // error handler
 onerror(app);
@@ -15,26 +23,22 @@ app.use(views('views', {
   root: __dirname + '/views',
   default: 'jade'
 }));
-app.use(require('koa-bodyparser')());
 app.use(json());
 app.use(logger());
-
-app.use(function *(next){
-  var start = new Date;
-  yield next;
-  var ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
-});
-
-app.use(require('koa-static')(__dirname + '/public'));
-
-// routes definition
-app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
-module.exports = app;
+
+// app.use(cors())
+// 使用响应处理中间件
+app.use(response);
+
+// 解析请求体
+app.use(bodyParser());
+
+// 引入路由分发
+const router = require('./routes');
+app.use(router.routes());

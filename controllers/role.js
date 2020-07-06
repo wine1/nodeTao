@@ -33,11 +33,11 @@ const {mysql} = require('../qcloud.js')
 // add()
 
 
-mysql('users').insert({username: 'b',password:'1234'})
-.then(res=>{
-    console.log('插入数据库成功')
-}).catch(ERROR=>{
-    console.log(error)
-});
+// mysql('users').insert({username: 'b',password:'1234'})
+// .then(res=>{
+//     console.log('插入数据库成功')
+// }).catch(ERROR=>{
+//     console.log(error)
+// });
 
 // console.log(mysql('users').select('*'))
