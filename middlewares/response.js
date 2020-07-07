@@ -1,5 +1,6 @@
 const debug = require('debug')
 module.exports = async function (ctx, next) {
+    console.log('response', ctx.query)
     try {
         await next()
         ctx.body = ctx.body ? ctx.body : {

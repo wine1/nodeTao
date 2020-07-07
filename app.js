@@ -1,38 +1,71 @@
+// const fs = require('fs');
+// const https = require('https');
+// const http = require('http');
+
+// const Koa = require('koa');
+// const cors = require('koa2-cors');
+// const debug = require('debug')('iplat');
+// const response = require('./middlewares/response');
+// const bodyParser = require('koa-bodyparser');
+
+// const config = require('./config');
+// const env = process.env.NODE_ENV;
+
+
+
+// const app = new Koa();
+
+// const koaBody = require('koa-body');
+// app.use(koaBody({
+//   multipart: true
+// }));
+
+// // 定义server
+// const httpServer = http.createServer(app.callback());
+
+// // 跨域
+// app.use(cors());
+
+// // 使用响应处理中间件
+// app.use(response);
+
+// // 解析请求体
+// app.use(bodyParser());
+
+// // 引入路由分发
+// const router = require('./routes');
+// app.use(router.routes());
+
+// // http监听3003端口
+// httpServer.listen(config[env].http, () => debug(`listening on port ${config[env].http}`));
 const fs = require('fs');
 const https = require('https');
 const http = require('http');
 
-const Koa = require('koa'),
-  cors = require('koa2-cors'),
-  logger = require('koa-logger'),
-  json = require('koa-json'),
-  views = require('koa-views'),
-  onerror = require('koa-onerror');
-
-
-const bodyParser = require('koa-bodyparser');
+const Koa = require('koa');
+const cors = require('koa2-cors');
+const debug = require('debug')('iplat');
 const response = require('./middlewares/response');
-const index = require('./routes/index');
-const app = new Koa()
+const bodyParser = require('koa-bodyparser');
 
-// error handler
-onerror(app);
+const config = require('./config');
+const env = process.env.NODE_ENV;
 
-// global middlewares
-app.use(views('views', {
-  root: __dirname + '/views',
-  default: 'jade'
+
+
+const app = new Koa();
+
+const koaBody = require('koa-body');
+app.use(koaBody({
+  multipart: true
 }));
-app.use(json());
-app.use(logger());
 
-// error-handling
-app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
-});
+// 定义server
+const httpServer = http.createServer(app.callback());
 
+// 跨域
+app.use(cors());
 
-// app.use(cors())
 // 使用响应处理中间件
 app.use(response);
 
@@ -42,3 +75,6 @@ app.use(bodyParser());
 // 引入路由分发
 const router = require('./routes');
 app.use(router.routes());
+
+// http监听3003端口
+httpServer.listen(config[env].http, () => debug(`listening on port ${config[env].http}`));
