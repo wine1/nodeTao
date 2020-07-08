@@ -1,24 +1,36 @@
 /*
-MySQL Data Transfer
-Source Host: localhost
-Source Database: taobao
-Target Host: localhost
-Target Database: taobao
-Date: 2019/2/20 17:49:31
+Navicat MySQL Data Transfer
+
+Source Server         : mysql
+Source Server Version : 50149
+Source Host           : localhost:3306
+Source Database       : taobao
+
+Target Server Type    : MYSQL
+Target Server Version : 50149
+File Encoding         : 65001
+
+Date: 2020-07-08 16:38:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for carts
 -- ----------------------------
 DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` char(11) CHARACTER SET latin1 NOT NULL,
-  `goodid` int(11) NOT NULL,
-  `goodamount` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `userName` char(11) CHARACTER SET utf8 NOT NULL,
+  `goodId` int(11) NOT NULL,
+  `goodAmount` int(11) NOT NULL DEFAULT '0',
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of carts
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for city
@@ -26,9 +38,14 @@ CREATE TABLE `carts` (
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city` varchar(255) NOT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`,`city`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of city
+-- ----------------------------
+INSERT INTO `city` VALUES ('1', '');
 
 -- ----------------------------
 -- Table structure for goods
@@ -36,74 +53,17 @@ CREATE TABLE `city` (
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `price` varchar(255) NOT NULL,
-  `pic` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `price` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `pic` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `shopid` int(11) NOT NULL,
   `count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
--- Table structure for orderlist
+-- Records of goods
 -- ----------------------------
-DROP TABLE IF EXISTS `orderlist`;
-CREATE TABLE `orderlist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` char(255) NOT NULL,
-  `goodid` int(11) NOT NULL,
-  `goodamount` int(11) NOT NULL,
-  `orderid` char(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for save
--- ----------------------------
-DROP TABLE IF EXISTS `save`;
-CREATE TABLE `save` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `userid` int(11) DEFAULT NULL,
-  `issave` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for shops
--- ----------------------------
-DROP TABLE IF EXISTS `shops`;
-CREATE TABLE `shops` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `name` char(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `username` char(255) CHARACTER SET latin1 NOT NULL,
-  `password` char(255) CHARACTER SET latin1 NOT NULL,
-  `telephone` char(255) CHARACTER SET latin1 DEFAULT NULL,
-  `image` char(255) CHARACTER SET latin1 DEFAULT NULL,
-  `address` char(255) CHARACTER SET latin1 DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
--- Records 
--- ----------------------------
-INSERT INTO `carts` VALUES ('2', '123', '13', '1');
-INSERT INTO `carts` VALUES ('3', '123', '10', '1');
-INSERT INTO `carts` VALUES ('4', '123', '17', '1');
-INSERT INTO `carts` VALUES ('5', '123', '11', '5');
-INSERT INTO `carts` VALUES ('7', 'yubowen', '12', '3');
-INSERT INTO `carts` VALUES ('8', 'yubowen', '19', '2');
-INSERT INTO `carts` VALUES ('9', 'yubowen', '9', '3');
-INSERT INTO `carts` VALUES ('14', 'haha', '20', '1');
-INSERT INTO `city` VALUES ('1', '');
 INSERT INTO `goods` VALUES ('6', '2018韩版新款网红高跟鞋秋季百搭女单鞋 英伦复古方头粗跟学院', '73.00', '//img.alicdn.com/bao/uploaded/i3/2884121096/O1CN011Jy0XMl46DKOcbx_!!2884121096.jpg_40x40.jpg', '0', null);
 INSERT INTO `goods` VALUES ('7', '兔毛毛拖鞋女秋2018新款韩版真毛交叉时尚平底外穿百搭秋季女凉拖', '78.00', '//img.alicdn.com/bao/uploaded/i3/2884121096/O1CN011Jy0XO6gEuJ7Ju7_!!2884121096.jpg_40x40.jpg', '1', null);
 INSERT INTO `goods` VALUES ('8', '2018新款韩国女鞋方头单鞋女平底浅口平跟复古奶奶鞋简约百搭春季', '69.00', '//img.alicdn.com/bao/uploaded/i4/2884121096/TB2gF2wbmtYBeNjSspkXXbU8VXa_!!2884121096.jpg_40x40.jpg', '1', null);
@@ -144,27 +104,38 @@ INSERT INTO `goods` VALUES ('42', '兰若庭汉服太平有象秋冬织金马面
 INSERT INTO `goods` VALUES ('43', '我是一只比掌柜萌的补差价/邮费的专用链接', '1.00', '//img.alicdn.com/bao/uploaded/i3/59079057/TB2Xvyyy9tYBeNjSspaXXaOOFXa_!!59079057.jpg_40x40.jpg', '10', null);
 INSERT INTO `goods` VALUES ('44', '兰若庭汉服传统汉服女装红果果马面裙百搭日常下裙春秋冬装', '99.00', '//img.alicdn.com/bao/uploaded/i3/59079057/TB2_pM1XH1YBuNjSszhXXcUsFXa_!!59079057.jpg_40x40.jpg', '10', null);
 INSERT INTO `goods` VALUES ('45', '兰若庭汉服 二重衣单件印花 魏晋风广袖交领襦裙', '55.00', '//img.alicdn.com/bao/uploaded/i1/59079057/TB2mdjDcNTI8KJjSspiXXbM4FXa_!!59079057.jpg_40x40.jpg', '10', null);
-INSERT INTO `orderlist` VALUES ('23', 'wine', '7', '6', '1542793569000');
-INSERT INTO `orderlist` VALUES ('24', 'wine', '7', '6', '1542793573000');
-INSERT INTO `orderlist` VALUES ('25', 'wine', '18', '1', '1542793573000');
-INSERT INTO `orderlist` VALUES ('26', 'haha', '20', '1', '1542850436000');
-INSERT INTO `orderlist` VALUES ('27', '1234', '7', '2', '1542878407000');
-INSERT INTO `orderlist` VALUES ('28', '1234', '6', '1', '1542879045000');
-INSERT INTO `orderlist` VALUES ('50', 'wine', '41', '10', '1543226710000');
-INSERT INTO `orderlist` VALUES ('51', 'wine', '7', '11', '1543226710000');
-INSERT INTO `orderlist` VALUES ('52', 'wine', '6', '18', '1543226710000');
-INSERT INTO `orderlist` VALUES ('53', 'wine', '11', '1', '1543226887000');
-INSERT INTO `orderlist` VALUES ('54', 'wine', '6', '1', '1543227868000');
-INSERT INTO `orderlist` VALUES ('55', 'wine', '8', '1', '1543227898000');
-INSERT INTO `orderlist` VALUES ('56', 'wine', '8', '1', '1543227920000');
-INSERT INTO `orderlist` VALUES ('57', 'wine', '9', '1', '1543227920000');
-INSERT INTO `orderlist` VALUES ('58', 'wine', '13', '1', '1543227966000');
-INSERT INTO `orderlist` VALUES ('59', 'wine', '10', '1', '1543371772000');
-INSERT INTO `orderlist` VALUES ('60', 'wine', '32', '1', '1543372026000');
-INSERT INTO `orderlist` VALUES ('61', '', '45', '2', '1543374622000');
-INSERT INTO `orderlist` VALUES ('62', '', '9', '2', '1543557172000');
-INSERT INTO `orderlist` VALUES ('63', '123', '6', '5', '1550633278000');
-INSERT INTO `shops` VALUES ('0', 'old dream');
+
+-- ----------------------------
+-- Table structure for orderlist
+-- ----------------------------
+DROP TABLE IF EXISTS `orderlist`;
+CREATE TABLE `orderlist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  `goodId` int(11) NOT NULL,
+  `goodAmount` int(11) NOT NULL,
+  `orderId` char(20) COLLATE utf8_unicode_ci NOT NULL,
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`id`,`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of orderlist
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for shops
+-- ----------------------------
+DROP TABLE IF EXISTS `shops`;
+CREATE TABLE `shops` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `name` char(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of shops
+-- ----------------------------
 INSERT INTO `shops` VALUES ('1', 'balala');
 INSERT INTO `shops` VALUES ('2', 'hahaha');
 INSERT INTO `shops` VALUES ('3', 'ga');
@@ -175,6 +146,25 @@ INSERT INTO `shops` VALUES ('7', 'er');
 INSERT INTO `shops` VALUES ('8', 'rte');
 INSERT INTO `shops` VALUES ('9', 'rewtwer');
 INSERT INTO `shops` VALUES ('10', 'rtw');
+INSERT INTO `shops` VALUES ('11', 'old dream');
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(6) NOT NULL AUTO_INCREMENT,
+  `username` char(255) CHARACTER SET latin1 NOT NULL,
+  `password` char(255) CHARACTER SET latin1 NOT NULL,
+  `telephone` char(255) CHARACTER SET latin1 DEFAULT NULL,
+  `image` char(255) CHARACTER SET latin1 DEFAULT NULL,
+  `address` char(255) CHARACTER SET latin1 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
 INSERT INTO `users` VALUES ('1', 'tian', '123', null, null, null);
 INSERT INTO `users` VALUES ('2', '123', '1234', null, null, null);
 INSERT INTO `users` VALUES ('11', 'wine', '1995', null, null, null);
@@ -184,3 +174,5 @@ INSERT INTO `users` VALUES ('14', 'haha', '123', null, null, null);
 INSERT INTO `users` VALUES ('16', '123456', '123456', null, null, null);
 INSERT INTO `users` VALUES ('17', '3465', 'dsgv234234', null, null, null);
 INSERT INTO `users` VALUES ('19', '32412', '3rtfe cv', null, null, null);
+INSERT INTO `users` VALUES ('20', '1', '123', null, null, null);
+INSERT INTO `users` VALUES ('21', '2', '123', null, null, null);
