@@ -2,29 +2,45 @@
 Navicat MySQL Data Transfer
 
 Source Server         : mysql
-Source Server Version : 50149
+Source Server Version : 80020
 Source Host           : localhost:3306
 Source Database       : taobao
 
 Target Server Type    : MYSQL
-Target Server Version : 50149
+Target Server Version : 80020
 File Encoding         : 65001
 
-Date: 2020-07-08 16:38:29
+Date: 2020-07-13 23:49:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for banner
+-- ----------------------------
+DROP TABLE IF EXISTS `banner`;
+CREATE TABLE `banner` (
+  `id` int NOT NULL,
+  `bannerCover` varchar(255) DEFAULT NULL,
+  `giidId` int NOT NULL,
+  PRIMARY KEY (`id`,`giidId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of banner
+-- ----------------------------
+INSERT INTO `banner` VALUES ('1', '//img.alicdn.com/bao/uploaded/i3/2884121096/O1CN011Jy0XMl46DKOcbx_!!2884121096.jpg_40x40.jpg', '6');
 
 -- ----------------------------
 -- Table structure for carts
 -- ----------------------------
 DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` char(11) CHARACTER SET utf8 NOT NULL,
-  `goodId` int(11) NOT NULL,
-  `goodAmount` int(11) NOT NULL DEFAULT '0',
-  `userId` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userName` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `goodId` int NOT NULL,
+  `goodAmount` int NOT NULL DEFAULT '0',
+  `userId` int NOT NULL,
   PRIMARY KEY (`id`,`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -37,8 +53,8 @@ CREATE TABLE `carts` (
 -- ----------------------------
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`,`city`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -52,12 +68,12 @@ INSERT INTO `city` VALUES ('1', '');
 -- ----------------------------
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `price` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `pic` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `shopid` int(11) NOT NULL,
-  `count` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `price` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `shopid` int NOT NULL,
+  `count` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -110,12 +126,12 @@ INSERT INTO `goods` VALUES ('45', '兰若庭汉服 二重衣单件印花 魏晋�
 -- ----------------------------
 DROP TABLE IF EXISTS `orderlist`;
 CREATE TABLE `orderlist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userName` char(255) COLLATE utf8_unicode_ci NOT NULL,
-  `goodId` int(11) NOT NULL,
-  `goodAmount` int(11) NOT NULL,
-  `orderId` char(20) COLLATE utf8_unicode_ci NOT NULL,
-  `userId` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userName` char(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `goodId` int NOT NULL,
+  `goodAmount` int NOT NULL,
+  `orderId` char(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `userId` int NOT NULL,
   PRIMARY KEY (`id`,`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -124,41 +140,55 @@ CREATE TABLE `orderlist` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for search
+-- ----------------------------
+DROP TABLE IF EXISTS `search`;
+CREATE TABLE `search` (
+  `id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of search
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for shops
 -- ----------------------------
 DROP TABLE IF EXISTS `shops`;
 CREATE TABLE `shops` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `name` char(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` char(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `role` int NOT NULL,
+  PRIMARY KEY (`id`,`role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of shops
 -- ----------------------------
-INSERT INTO `shops` VALUES ('1', 'balala');
-INSERT INTO `shops` VALUES ('2', 'hahaha');
-INSERT INTO `shops` VALUES ('3', 'ga');
-INSERT INTO `shops` VALUES ('4', 'efw');
-INSERT INTO `shops` VALUES ('5', 'efas');
-INSERT INTO `shops` VALUES ('6', 'gtrhth');
-INSERT INTO `shops` VALUES ('7', 'er');
-INSERT INTO `shops` VALUES ('8', 'rte');
-INSERT INTO `shops` VALUES ('9', 'rewtwer');
-INSERT INTO `shops` VALUES ('10', 'rtw');
-INSERT INTO `shops` VALUES ('11', 'old dream');
+INSERT INTO `shops` VALUES ('1', 'balala', '0');
+INSERT INTO `shops` VALUES ('2', 'hahaha', '0');
+INSERT INTO `shops` VALUES ('3', 'ga', '0');
+INSERT INTO `shops` VALUES ('4', 'efw', '0');
+INSERT INTO `shops` VALUES ('5', 'efas', '0');
+INSERT INTO `shops` VALUES ('6', 'gtrhth', '0');
+INSERT INTO `shops` VALUES ('7', 'er', '0');
+INSERT INTO `shops` VALUES ('8', 'rte', '0');
+INSERT INTO `shops` VALUES ('9', 'rewtwer', '0');
+INSERT INTO `shops` VALUES ('10', 'rtw', '0');
+INSERT INTO `shops` VALUES ('11', 'old dream', '0');
 
 -- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `username` char(255) CHARACTER SET latin1 NOT NULL,
-  `password` char(255) CHARACTER SET latin1 NOT NULL,
-  `telephone` char(255) CHARACTER SET latin1 DEFAULT NULL,
-  `image` char(255) CHARACTER SET latin1 DEFAULT NULL,
-  `address` char(255) CHARACTER SET latin1 DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` char(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `password` char(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `telephone` char(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `image` char(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `address` char(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

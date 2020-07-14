@@ -1,4 +1,6 @@
-const { mysql } = require("../qcloud.js");
+const {
+  mysql
+} = require("../qcloud.js");
 
 async function getGoodsList(ctx) {
   try {
@@ -12,18 +14,34 @@ async function getGoodsList(ctx) {
   }
 }
 async function getGood(ctx) {
-    try {
-      const { id } = ctx.query;
-      const data = await mysql("goods").select('*').where({id})
-      ctx.state.code = 0;
-      ctx.state.data = data;
-    } catch (e) {
-      ctx.state.code = -1;
-      throw new Error(e);
-    }
+  try {
+    const {
+      id
+    } = ctx.query;
+    const data = await mysql("goods").select('*').where({
+      id
+    })
+    ctx.state.code = 0;
+    ctx.state.data = data;
+  } catch (e) {
+    ctx.state.code = -1;
+    throw new Error(e);
   }
+}
+
+async function getBanner(ctx) {
+  try {
+    const data = await mysql('banner').select('*')
+    ctx.state.code = 0;
+    ctx.state.data = data;
+  } catch (e) {
+    ctx.state.code = -1;
+    throw new Error(e)
+  }
+}
 
 module.exports = {
   getGoodsList,
-  getGood
+  getGood,
+  getBanner
 };

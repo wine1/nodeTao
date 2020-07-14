@@ -30,7 +30,6 @@ npm run prd
 ## 项目结构
 
 ```
-iPlat-CMS
 ├── README.md
 ├── app.js
 ├── controllers
@@ -55,3 +54,10 @@ iPlat-CMS
 `routes/index.js` 是 Demo 的路由定义文件
 
 `controllers` 存放 Demo 所有业务逻辑的目录，`index.js` 不需要修改，他会动态的将 `controllers` 文件夹下的目录结构映射成 modules 的 Object，例如 Demo 中的目录将会被映射成如下的结构：
+
+
+端口被占用杀进程的命令（例如3000）
+netstat -nao | findstr 3000 
+杀掉对应的进程
+taskkill /pid 13508 （13508 就是上面的 PID 的值）
+如果报错，提示无法终止该 PID 的进程，那个执行 taskkill/F /pid 13508（强制杀死该进程）

@@ -26,3 +26,8 @@ async function addToCart(ctx) {
         throw new Error(e);
       }
 }
+
+module.exports={
+  getCart,
+  addToCart
+}

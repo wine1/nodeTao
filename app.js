@@ -49,8 +49,8 @@ const response = require('./middlewares/response');
 const bodyParser = require('koa-bodyparser');
 
 const config = require('./config');
-const env = process.env.NODE_ENV;
-
+// const env = process.env.NODE_ENV;
+const env='dev'
 
 
 const app = new Koa();
