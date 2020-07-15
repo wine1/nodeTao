@@ -23,6 +23,6 @@ async function getOrderList(ctx) {
     }
 }
 
-module.exports{
+module.exports={
     updateOrderList,getOrderList
 }
