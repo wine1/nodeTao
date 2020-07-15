@@ -4,8 +4,8 @@ const {
 
 async function getGoodsList(ctx) {
   try {
-    // const { id } = ctx.query;
-    const data = await mysql("goods").select('*')
+    const { pageSize } = ctx.query;
+    const data = await mysql("goods").select('*').limit(pageSize)
     ctx.state.code = 0;
     ctx.state.data = data;
   } catch (e) {

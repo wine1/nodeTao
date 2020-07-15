@@ -8,18 +8,13 @@ async function signIn(ctx) {
         const {
             username,
             password
-        } = ctx.request.body;
-        const data1 = await mysql('users').select('username', 'password')
-        if (!data1) {
-            ctx.state.code = 0;
-            ctx.state.data = data1;
-            const data2 = await mysql('users').insert({
-                username,
-                password
-            })
-        }
+        } = ctx.query;
+        const data1 = await mysql('users').select('*').where({username,password})
+        ctx.state.code = 0;
+        ctx.state.data = data1;
     } catch (e) {
-        console.log(e)
+        ctx.state.code=-1
+        throw new Error(e)
     }
 }
 
@@ -29,18 +24,24 @@ async function signUp(ctx) {
         const {
             username,
             password
-        } = ctx.request.body;
-        const data1 = await mysql('users').select({
-            username
-        })
-        if (!data1) {
+        } = ctx.query;
+        const data1 = await mysql('users').select('*').where({username,password})
+        ctx.state.code = 0;
+        ctx.state.data = data1;
+        if (data1&&data1.length) {
+            ctx.state.code = 0;
+            ctx.state.data = data1;
+        }else {
             const data2 = await mysql('users').insert({
                 username,
-                password
+                password,
+                userType:'0'
             })
-        } else {
-            ctx.state.code = -1;
-            ctx.state.data = '该用户名已存在'
+            if(data2) {
+                ctx.state.code = 0;
+                ctx.state.data = data2;
+                //返回值data2是插入数据的id值
+            }
         }
     } catch (e) {
         console.log(e)

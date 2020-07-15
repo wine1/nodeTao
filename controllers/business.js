@@ -17,7 +17,7 @@ async function createShop(ctx) {
 async function grounding(ctx) {
     try{
         const {shopId}=ctx.query
-        const data=await mysql('shops').insert({shopId})
+        const data=await mysql('shops').insert({name,price,shopid,pic,})
         ctx.state.code=0;
         ctx.state.data=data
     }catch(e) {

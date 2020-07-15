@@ -5,7 +5,8 @@
 const router = require('koa-router')();
 const controllers = require('../controllers')
 
-router.post('/api/user/login', controllers.login.signIn) //登录
+router.get('/api/user/login', controllers.login.signIn) //登录
+router.get('/api/user/register', controllers.login.signUp) //注册
 router.get('/api/goodslist/getGoodsList', controllers.goods.getGoodsList) //获取物品列表
 router.post('/api/goodslist/details', controllers.goods.getGood) //根据id获取商品
 router.post('/api/carts/getcart',controllers.carts.getCart)//获取用户的购物车列表
